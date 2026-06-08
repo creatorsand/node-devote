@@ -102,7 +102,7 @@ node-devote/
 ├── lib/
 │   └── voting-algorithm.ts   # 投票算法实现
 └── public/
-    └── 706acc.svg           # Logo文件
+    └── cre&.svg             # Logo文件
 ```
 
 ## 🔮 核心算法
