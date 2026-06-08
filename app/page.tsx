@@ -8,7 +8,7 @@ export default function Home() {
   const [name, setName] = useState("");
   const [text, setText] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const [modalType, setModalType] = useState<'success' | 'error'>('success');
+  const [modalType, setModalType] = useState<"success" | "error">("success");
   const [modalMessage, setModalMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
@@ -16,15 +16,15 @@ export default function Home() {
   const handleSubmit = async () => {
     // 验证输入
     if (!name.trim()) {
-      setModalType('error');
-      setModalMessage('请输入您的名字');
+      setModalType("error");
+      setModalMessage("请输入您的名字");
       setShowModal(true);
       return;
     }
 
     if (!text.trim()) {
-      setModalType('error');
-      setModalMessage('请输入投票提名');
+      setModalType("error");
+      setModalMessage("请输入投票提名");
       setShowModal(true);
       return;
     }
@@ -32,31 +32,33 @@ export default function Home() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('/api/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, text })
+      const response = await fetch("/api/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, text }),
       });
 
       const data = await response.json();
 
       if (response.ok && data.success) {
-        setModalType('success');
-        setModalMessage(`提交成功！您提交了 ${data.votes} 个投票。即将跳转到排行榜...`);
-        setName('');
-        setText('');
-        
+        setModalType("success");
+        setModalMessage(
+          `提交成功！您提交了 ${data.votes} 个投票。即将跳转到排行榜...`,
+        );
+        setName("");
+        setText("");
+
         // 2秒后跳转到排行榜
         setTimeout(() => {
-          router.push('/results');
+          router.push("/results");
         }, 2000);
       } else {
-        setModalType('error');
-        setModalMessage(data.error || '提交失败，请稍后重试。');
+        setModalType("error");
+        setModalMessage(data.error || "提交失败，请稍后重试。");
       }
     } catch (error) {
-      setModalType('error');
-      setModalMessage('网络错误，请检查连接后重试。');
+      setModalType("error");
+      setModalMessage("网络错误，请检查连接后重试。");
     } finally {
       setIsSubmitting(false);
       setShowModal(true);
@@ -68,7 +70,7 @@ export default function Home() {
   };
 
   const goToResults = () => {
-    router.push('/results');
+    router.push("/results");
   };
 
   return (
@@ -76,8 +78,8 @@ export default function Home() {
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
         <Image
           className="dark:invert"
-          src="/706acc.svg"
-          alt="706/acc logo"
+          src="/cre&.svg"
+          alt="cre& logo"
           width={107.5}
           height={95}
           priority
@@ -135,9 +137,9 @@ export default function Home() {
               disabled={isSubmitting}
               className="flex-1 rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isSubmitting ? '提交中...' : '提交'}
+              {isSubmitting ? "提交中..." : "提交"}
             </button>
-            
+
             <button
               type="button"
               onClick={goToResults}
@@ -154,22 +156,42 @@ export default function Home() {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-sm w-full">
             <div className="flex items-center justify-center mb-4">
-              {modalType === 'success' ? (
+              {modalType === "success" ? (
                 <div className="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center">
-                  <svg className="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  <svg
+                    className="w-6 h-6 text-green-600 dark:text-green-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
                   </svg>
                 </div>
               ) : (
                 <div className="w-12 h-12 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center">
-                  <svg className="w-6 h-6 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <svg
+                    className="w-6 h-6 text-red-600 dark:text-red-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
                   </svg>
                 </div>
               )}
             </div>
             <h3 className="text-lg font-semibold text-center mb-2 text-gray-900 dark:text-gray-100">
-              {modalType === 'success' ? '提交成功' : '提交失败'}
+              {modalType === "success" ? "提交成功" : "提交失败"}
             </h3>
             <p className="text-gray-600 dark:text-gray-300 text-center mb-6">
               {modalMessage}
@@ -179,11 +201,11 @@ export default function Home() {
                 onClick={closeModal}
                 className="flex-1 py-2 px-4 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-md font-medium transition-colors hover:bg-gray-50 dark:hover:bg-gray-800"
               >
-                {modalType === 'success' ? '稍后查看' : '确定'}
+                {modalType === "success" ? "稍后查看" : "确定"}
               </button>
-              {modalType === 'success' && (
+              {modalType === "success" && (
                 <button
-                  onClick={() => router.push('/results')}
+                  onClick={() => router.push("/results")}
                   className="flex-1 py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-md font-medium transition-colors"
                 >
                   立即查看
